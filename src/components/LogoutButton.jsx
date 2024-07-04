@@ -1,4 +1,3 @@
-// components/LogoutButton.js
 import React from "react";
 import { useAuth } from "../Context/AuthContext";
 import { useNavigate } from "react-router-dom";
@@ -10,7 +9,7 @@ export default function LogoutButton() {
   async function handleLogout() {
     try {
       await logout();
-      navigate("/login"); // Redirect to login page after logout
+      navigate("/login"); 
     } catch (error) {
       console.error("Failed to log out:", error);
     }
