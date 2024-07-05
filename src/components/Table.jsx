@@ -1,5 +1,4 @@
-import React from "react";
-import { useState } from "react";
+import React, { useState } from "react";
 import search from "../assets/search.svg";
 
 const customers = [
@@ -77,107 +76,105 @@ function Table() {
   );
 
   return (
-    <div className="flex flex-col xl:mx-12 bg-white w-max lg:w-[900px] mb-12">
-      <div className="flex items-center justify-between my-4">
-        <div>
-          <h1 className="font-[600] text-[14px] xl:text-[22px] leading-[33px]">
-            All Customers
-          </h1>
-          <div className="font-[400] text-[12px] xl:text-[14px] text-[#16C098] xl:leading-[21px]">
+    <div className="flex flex-col xl:mx-12 bg-white w-full lg:w-[900px] mb-12 p-4 shadow-md rounded-lg">
+      <div className="flex flex-col md:flex-row items-center justify-between my-4">
+        <div className="mb-4 md:mb-0">
+          <h1 className="font-semibold text-lg xl:text-2xl">All Customers</h1>
+          <div className="text-sm xl:text-base text-[#16C098]">
             Active Members
           </div>
         </div>
-        <div className="flex justify-between">
-          <div className="flex flex-col justify-center">
-            <img src={search} alt="" className="absolute ml-2" />
+        <div className="flex flex-col md:flex-row gap-4">
+          <div className="relative flex items-center">
+            <img src={search} alt="Search" className="absolute ml-3" />
             <input
-              className="rounded-xl xl:w-[216px] xl:h-[38px] py-2 px-3 text-[#B5B7C0] bg-white font-[400] text-[14px] leading-[21px] focus:outline-none focus:shadow-outline placeholder:pl-5"
+              type="text"
+              className="rounded-lg pl-10 pr-4 py-2 text-gray-600 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
               placeholder="Search"
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
             />
           </div>
-          <select className="border border-gray-300 text-[12px] xl:text-[16px] xl:h-[38px] xl:w-[150px] rounded-[10px]">
+          <select className="border border-gray-300 text-sm xl:text-base rounded-lg py-2 px-4 focus:outline-none focus:ring-2 focus:ring-blue-500">
             <option value="newest">Sort by: Newest</option>
             <option value="oldest">Sort by: Oldest</option>
           </select>
         </div>
       </div>
-      <table className="min-w-full bg-white border border-gray-200 mx-2">
-        <thead>
-          <tr className="border-b border-b-[#EEEEEE]">
-            <th className="font-[500] xl:text-[14px] xl:leading-[33px] text-[#B5B7C0]">
-              Customer Name
-            </th>
-            <th className="font-[500] xl:text-[14px] xl:leading-[33px] text-[#B5B7C0]">
-              Company
-            </th>
-            <th className="font-[500] xl:text-[14px] xl:leading-[33px] text-[#B5B7C0]">
-              Phone Number
-            </th>
-            <th className="font-[500] xl:text-[14px] xl:leading-[33px] text-[#B5B7C0]">
-              Email
-            </th>
-            <th className="font-[500] xl:text-[14px] xl:leading-[33px] text-[#B5B7C0]">
-              Country
-            </th>
-            <th className="font-[500] xl:text-[14px] xl:leading-[33px] text-[#B5B7C0]">
-              Status
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          {filteredCustomers.map((customer, index) => (
-            <tr className="border-b border-b-[#EEEEEE]" key={index}>
-              <td className="font-[500] text-[12px] xl:text-[14px] text-[#292D32] xl:leading-[33px] xl:px-2 py-2">
-                {customer.name}
-              </td>
-              <td className="font-[500] text-[12px] xl:text-[14px] text-[#292D32] xl:leading-[33px]">
-                {customer.company}
-              </td>
-              <td className="font-[500] text-[12px] xl:text-[14px] text-[#292D32] xl:leading-[33px]">
-                {customer.phone}
-              </td>
-              <td className="font-[500] text-[12px] xl:text-[14px] text-[#292D32] xl:leading-[33px]">
-                {customer.email}
-              </td>
-              <td className="font-[500] text-[12px] xl:text-[14px] text-[#292D32] xl:leading-[33px]">
-                {customer.country}
-              </td>
-              <td className="font-[500] text-[12px] xl:text-[14px] text-[#292D32] xl:leading-[33px]">
-                <button
-                  className={`font-[500] xl:text-[14px] rounded-md border py-1 px-1 xl:px-3 leading-[21px] xl:w-[80px] ${
-                    customer.status === "Active"
-                      ? "bg-[#16C09861] border-[#00B087] text-[#00B087]"
-                      : "bg-[#FFC5C5] border-[#DF0404] text-[#DF0404]"
-                  }`}
+      <div className="overflow-x-auto">
+        <table className="min-w-full bg-white border border-gray-200">
+          <thead>
+            <tr className="border-b border-gray-300">
+              {[
+                "Customer Name",
+                "Company",
+                "Phone Number",
+                "Email",
+                "Country",
+                "Status",
+              ].map((heading, index) => (
+                <th
+                  key={index}
+                  className="font-medium text-sm xl:text-base text-gray-500 px-4 py-2 text-left"
                 >
-                  {customer.status}
-                </button>
-              </td>
+                  {heading}
+                </th>
+              ))}
             </tr>
-          ))}
-        </tbody>
-      </table>
-      <div className="flex justify-between items-center mt-4">
-        <div className="text-[12px] xl:text-[16px] text-gray-600">
-          Showing data 1 to 8 of 256K entries
-        </div>
-        <div className="flex gap-x-2">
-          <button className="bg-[#F5F5F5] text-[#404B52] text-[12px] xl:text-[16px] xl:px-2.5 xl:py-1.5 border rounded-sm">
+          </thead>
+          <tbody>
+            {filteredCustomers.map((customer, index) => (
+              <tr className="border-b border-gray-200" key={index}>
+                <td className="text-sm xl:text-base text-gray-900 px-4 py-2">
+                  {customer.name}
+                </td>
+                <td className="text-sm xl:text-base text-gray-900 px-4 py-2">
+                  {customer.company}
+                </td>
+                <td className="text-sm xl:text-base text-gray-900 px-4 py-2">
+                  {customer.phone}
+                </td>
+                <td className="text-sm xl:text-base text-gray-900 px-4 py-2">
+                  {customer.email}
+                </td>
+                <td className="text-sm xl:text-base text-gray-900 px-4 py-2">
+                  {customer.country}
+                </td>
+                <td className="text-sm xl:text-base text-gray-900 px-4 py-2">
+                  <span
+                    className={`px-2 py-1 rounded-lg ${
+                      customer.status === "Active"
+                        ? "bg-green-100 text-green-600"
+                        : "bg-red-100 text-red-600"
+                    }`}
+                  >
+                    {customer.status}
+                  </span>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      <div className="flex flex-col md:flex-row justify-between items-center mt-4 text-sm xl:text-base text-gray-600">
+        <div>Showing data 1 to 8 of 256K entries</div>
+        <div className="flex gap-x-2 mt-2 md:mt-0">
+          <button className="bg-gray-100 text-gray-600 px-3 py-1 rounded-sm">
             {"<"}
           </button>
           {[1, 2, 3, 4, "...", 40].map((num, index) => (
             <button
               key={index}
-              className={`px-3 py-1 border ${
-                num == 1
-                  ? "bg-[#5932EA] text-white"
-                  : "bg-[#F5F5F5] text-[#404B52]"
+              className={`px-3 py-1 rounded-sm ${
+                num === 1
+                  ? "bg-blue-500 text-white"
+                  : "bg-gray-100 text-gray-600"
               }`}
             >
               {num}
             </button>
           ))}
-          <button className="bg-[#F5F5F5] text-[#404B52] px-3 py-1 border">
+          <button className="bg-gray-100 text-gray-600 px-3 py-1 rounded-sm">
             {">"}
           </button>
         </div>
